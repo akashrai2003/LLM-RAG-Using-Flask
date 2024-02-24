@@ -13,7 +13,7 @@ from langchain.document_loaders import PyPDFLoader
 app = Flask(__name__)
 
 # Initialize LLM and other components as in the original code
-local_llm = "TheBloke/Mistral-7B-Instruct-v0.1-GGUF"
+local_llm = "mistral-7b-instruct-v0.1.Q4_0.gguf"
 config = {
     'max_new_tokens': 2048,
     'repeat_penalty': 1.1,
