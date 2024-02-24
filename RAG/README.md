@@ -31,9 +31,14 @@ The repository shows an example of performing Retrieval Augmented Generation (RA
 
 To customize parameters and facilitate easy retrieval of information from PDFs, I opted for Langchain. Another approach, a step closer to RAG, involves creating a vectorDB using FAISS and performing semantic search to find the closest matches. This can then be passed to a text generation model to provide more information about the similar found texts. An example of this approach can be found in [Semantic-Search-Engine-With-Summarizer](https://github.com/college-akashrai/SemanticSearchForPatents).
 
-To reproduce this code, clone the directory, delete the `stores` directory (contains embeddings), remove any documents in the `Docs` directory, and insert your own documents. The `research` directory contains code tests, while the `templates` directory has the `index.html` files for UI. Flask is used for backend integration (see `app.py`). To create the vector store, run `ingest.py` after placing documents in the correct directory.
+This code can be reproduced by cloning the directory and thus deleting the `stores` directory as it contains the embeddings created and also removing any documents in the `Docs` directory and you can insert your own documnets here. The `research` directory contains the code tests and how I'd first used Jupyter notebook to generate results in a different way and then transforming it to a python script. The templates dir has the `index.html` files where I'd tried different UI but as I'm not too good/experienced at it so I tried to stick with a basic template. Flask is used for backend integration of the HTML file and is available in `app.py`. 
 
-Download any LLM model (here I used Mistral7B) from HuggingFace onto your local machine. Provide the path or complete info of the model from HuggingFace, like `TheBloke/Mistral-7B-Instruct-v0.1-GGUF`. Running `python3 app.py` will spin off the Flask server, load the model, and the chat UI can be used to provide queries based on the docs with accurate responses and sourcing information.
 
-Note: The chat interface might need improvement in terms of UI, but the functionality is intact. Frontend knowledge can be acquired as needed.
+But in order to create the vector store first we have to run the `ingest.py` file while placing the documents in the correct directory.
+Finally, downloading any LLM model (P.S. here I've used Mistral7B) from HuggingFace onto your local machine and provide the path or you can just give the complete info of the model from HuggingFace like: `TheBloke/Mistral-7B-Instruct-v0.1-GGUF`
+
+And thus it will download the model temporarily in cache and can be used repeatedly if loaded once. So running the python script using:
+`python3 app.py` would spin off the flask server and the model will be loaded and thus using the chat UI we can give queries based on the docs and accurate responses with the sourcing of the info too. The chat interface wasn't developed too well due to some time constraints and my lack of in-depth frontend knowledge. But I beleive learning frontend won't be a major part here as I was easily able to create endpoints and perform the app to run without major issues. 
+
+
 
