@@ -31,7 +31,10 @@ The repository shows an example of performing Retrieval Augmented Generation (RA
 
 To customize parameters and facilitate easy retrieval of information from PDFs, I opted for Langchain. Another approach, a step closer to RAG, involves creating a vectorDB using FAISS and performing semantic search to find the closest matches. This can then be passed to a text generation model to provide more information about the similar found texts. An example of this approach can be found in [Semantic-Search-Engine-With-Summarizer](https://github.com/college-akashrai/SemanticSearchForPatents).
 
-This code can be reproduced by cloning the directory and thus deleting the `stores` directory as it contains the embeddings created and also removing any documents in the `Docs` directory and you can insert your own documnets here. The `research` directory contains the code tests and how I'd first used Jupyter notebook to generate results in a different way and then transforming it to a python script. The templates dir has the `index.html` files where I'd tried different UI but as I'm not too good/experienced at it so I tried to stick with a basic template. Flask is used for backend integration of the HTML file and is available in `app.py`. 
+This code can be reproduced by cloning the directory and thus deleting the `stores` directory as it contains the embeddings created and also removing any documents in the `Docs` directory and you can insert your own documnets here. And using the command
+`pip install -r requirements.txt` after creating a new environment using conda 
+
+The `research` directory contains the code tests and how I'd first used Jupyter notebook to generate results in a different way and then transforming it to a python script. The templates dir has the `index.html` files where I'd tried different UI but as I'm not too good/experienced at it so I tried to stick with a basic template. Flask is used for backend integration of the HTML file and is available in `app.py`. 
 
 
 But in order to create the vector store first we have to run the `ingest.py` file while placing the documents in the correct directory.
