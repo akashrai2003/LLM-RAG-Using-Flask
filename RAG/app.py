@@ -1,13 +1,13 @@
 # Import necessary modules
 from flask import Flask, request, jsonify, render_template
 import os
-from langchain import PromptTemplate, LLMChain
+from langchain.prompts import PromptTemplate
 from langchain.llms.ctransformers import CTransformers
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.chroma import Chroma
 from langchain.chains import RetrievalQA
-from langchain.embeddings import HuggingFaceBgeEmbeddings
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from langchain_community.document_loaders import PyPDFLoader
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -54,7 +54,7 @@ embeddings = HuggingFaceBgeEmbeddings(
 
 prompt = PromptTemplate(template=prompt_template, input_variables=['context', 'question'])
 
-load_vector_store = Chroma(persist_directory="stores/pet_cosine", embedding_function=embeddings)
+load_vector_store = Chroma(persist_directory="stores/doc_cosine", embedding_function=embeddings)
 
 retriever = load_vector_store.as_retriever(search_kwargs={"k": 1})
 

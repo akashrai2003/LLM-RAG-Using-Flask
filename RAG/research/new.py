@@ -54,7 +54,7 @@ embeddings = HuggingFaceBgeEmbeddings(
 
 prompt = PromptTemplate(template=prompt_template, input_variables=['context', 'question'])
 
-load_vector_store = Chroma(persist_directory="stores/pet_cosine", embedding_function=embeddings)
+load_vector_store = Chroma(persist_directory="stores/doc_cosine", embedding_function=embeddings)
 
 retriever = load_vector_store.as_retriever(search_kwargs={"k":1})
 
