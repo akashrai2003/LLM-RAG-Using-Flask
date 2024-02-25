@@ -24,6 +24,7 @@ config = {
     'threads': int(os.cpu_count() / 2)
 }
 
+# Initializing the LLM
 llm = CTransformers(
     model=local_llm,
     model_type="mistral",
@@ -42,7 +43,7 @@ Question: {question}
 Only return the helpful answer below and nothing else.
 Helpful answer:
 """
-
+#declaring the model and its parameters
 model_name = "BAAI/bge-large-en"
 model_kwargs = {'device': 'cpu'}
 encode_kwargs = {'normalize_embeddings': False}
@@ -51,11 +52,11 @@ embeddings = HuggingFaceBgeEmbeddings(
     model_kwargs=model_kwargs,
     encode_kwargs=encode_kwargs
 )
-
+# Declaring the prompt format
 prompt = PromptTemplate(template=prompt_template, input_variables=['context', 'question'])
-
+#laoding the chromaDB based vector store
 load_vector_store = Chroma(persist_directory="stores/doc_cosine", embedding_function=embeddings)
-
+#initializing the retriever
 retriever = load_vector_store.as_retriever(search_kwargs={"k": 1})
 
 # Define the routes
@@ -67,7 +68,7 @@ def indexx():
 def get_response():
     query = request.form.get('query')
 
-    # Your logic to handle the query
+    # The logic to handle the query
     chain_type_kwargs = {"prompt": prompt}
     qa = RetrievalQA.from_chain_type(
         llm=llm,
@@ -83,19 +84,20 @@ def get_response():
         return jsonify({"answer": "Invalid query", "source_document": "", "doc": ""})
 
     response = qa(query)
-
+    # Extract the source document and the answer from the response
     if response['source_documents']:
         source_document = response['source_documents'][0].page_content
         doc = response['source_documents'][0].metadata['source']
+    # If no source document is found, set the source document to "No source document found."
     else:
         source_document = "No source document found."
         doc = "Unknown"
-
+    # Selecting the answer and source_doc etc. from the response
     answer = response['result']
     response_data = {"answer": answer, "source_document": source_document, "doc": doc}
-
+    # Returning the response in JSON format
     return jsonify(response_data)
 
-
+#Running the application
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
