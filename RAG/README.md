@@ -31,7 +31,7 @@ The repository shows an example of performing Retrieval Augmented Generation (RA
 
 
 Sample output can be displayed as follows:
-![Output: ](templates/image.png)
+![Output: ](templates/imageOP.png)
 
 To customize parameters and facilitate easy retrieval of information from PDFs, I opted for Langchain. Another approach, a step closer to RAG, involves creating a vectorDB using FAISS and performing semantic search to find the closest matches. This can then be passed to a text generation model to provide more information about the similar found texts. An example of this approach can be found in [Semantic-Search-Engine-With-Summarizer](https://github.com/college-akashrai/SemanticSearchForPatents).
 
