@@ -29,6 +29,10 @@ The repository shows an example of performing Retrieval Augmented Generation (RA
 - Smaller community compared to Hugging Face.
 - May require more manual setup and configuration.
 
+
+Sample output can be displayed as follows:
+![Output: ](RAG/templates/image.png)
+
 To customize parameters and facilitate easy retrieval of information from PDFs, I opted for Langchain. Another approach, a step closer to RAG, involves creating a vectorDB using FAISS and performing semantic search to find the closest matches. This can then be passed to a text generation model to provide more information about the similar found texts. An example of this approach can be found in [Semantic-Search-Engine-With-Summarizer](https://github.com/college-akashrai/SemanticSearchForPatents).
 
 This code can be reproduced by cloning the directory and thus deleting the `stores` directory as it contains the embeddings created and also removing any documents in the `Docs` directory and you can insert your own documnets here. And using the command
