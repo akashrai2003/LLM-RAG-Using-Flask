@@ -1,13 +1,10 @@
 '''
-This application has used OpenAI's GPT-3.5-turbo model to answer questions based on the context provided. The application uses the HuggingFace BGE model to encode the documents and the Chroma vector store to retrieve the most relevant document based on the query. The application is built using Flask and provides an API endpoint to get the response for a given query. The response includes the answer, source document, and document ID. The application also includes a simple HTML form to input the query and display the response.
+This application has used a locally downloaded Mistral Instruct model to answer questions based on the context provided. The application uses the HuggingFace BGE model to encode the documents and the Chroma vector store to retrieve the most relevant document based on the query. The application is built using Flask and provides an API endpoint to get the response for a given query. The response includes the answer, source document, and document ID. The application also includes a simple HTML form to input the query and display the response.
 '''
-
 # Import necessary modules
+
 from flask import Flask, request, jsonify, render_template
 import os
-from dotenv import load_dotenv
-from langchain import hub
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.llms.ctransformers import CTransformers
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -15,36 +12,31 @@ from langchain.vectorstores.chroma import Chroma
 from langchain.chains import RetrievalQA
 from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
-from dotenv import load_dotenv
 
-load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
 # Initialize Flask app
 app = Flask(__name__)
 
 # Initialize LLM and other components as in the original code
-# local_llm = "mistral-7b-instruct-v0.1.Q4_0.gguf"
-# config = {
-#     'max_new_tokens': 2048,
-#     'repeat_penalty': 1.1,
-#     'temperature': 0.4,
-#     'top_k': 50,
-#     'top_p': 0.9,
-#     'stream': True,
-#     'threads': int(os.cpu_count() / 2)
-# }
+local_llm = "mistral-7b-instruct-v0.1.Q4_0.gguf"
+config = {
+    'max_new_tokens': 2048,
+    'repeat_penalty': 1.1,
+    'temperature': 0.4,
+    'top_k': 50,
+    'top_p': 0.9,
+    'stream': True,
+    'threads': int(os.cpu_count() / 2)
+}
 
-# # Initializing the LLM
-# llm = CTransformers(
-#     model=local_llm,
-#     model_type="mistral",
-#     lib="avx2",
-#     **config
-# )
+# Initializing the LLM
+llm = CTransformers(
+    model=local_llm,
+    model_type="mistral",
+    lib="avx2",
+    **config
+)
 
-# print("LLM Initialized....")
-prompt = hub.pull("rlm/rag-prompt")
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, openai_api_key=openai_api_key)
+print("LLM Initialized....")
 
 prompt_template = """
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
